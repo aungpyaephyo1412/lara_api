@@ -54,6 +54,9 @@ class ItemController extends Controller
         if (is_null($item)){
             return response()->json(["message"=>"Item not found"],404);
         }
+        $request->validate([
+            "name"=>"required"
+        ]);
         $item->name = $request->name;
         $item->update();
         return response()->json(["message"=>"Update successfully"],200);
