@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ItemResource;
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class ItemController extends Controller
         $items = Item::when(request()->has("keyword"), function (Builder $query) {
             $query->where("name","like","%".request()->keyword."%");
         })->paginate(10)->withQueryString();
-        return response()->json($items,200);
+//        return response()->json($items,200);
+        return ItemResource::collection($items);
     }
 
     /**
