@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ItemController extends Controller
 {
@@ -24,9 +25,12 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            "name"=>"required"
+        $validator = Validator::make($request->all(),[
+            "name" => "required"
         ]);
+        if ($validator->fails()){
+            return response()->json([$validator->messages()],422);
+        }
         $item = new Item();
         $item->name = $request->name;
         $item->save();
@@ -50,13 +54,16 @@ class ItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $validator = Validator::make($request->all(),[
+            "name" => "required"
+        ]);
+        if ($validator->fails()){
+            return response()->json([$validator->messages()],422);
+        }
         $item = Item::find($id);
         if (is_null($item)){
             return response()->json(["message"=>"Item not found"],404);
         }
-        $request->validate([
-            "name"=>"required"
-        ]);
         $item->name = $request->name;
         $item->update();
         return response()->json(["message"=>"Update successfully"],200);
