@@ -50,7 +50,13 @@ class ItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = Item::find($id);
+        if (is_null($item)){
+            return response()->json(["message"=>"Item not found"],404);
+        }
+        $item->name = $request->name;
+        $item->update();
+        return response()->json(["message"=>"Update successfully"],200);
     }
 
     /**
