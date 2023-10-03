@@ -48,7 +48,8 @@ class ItemController extends Controller
         if (is_null($item)){
             return response()->json(["message"=>"Item not found"],404);
         }
-        return response()->json($item);
+//        return response()->json($item);
+        return new ItemResource($item);
     }
 
     /**
