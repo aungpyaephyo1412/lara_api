@@ -13,7 +13,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::when(\request()->has("keyword"), function (Builder $query) {
+        $items = Item::when(request()->has("keyword"), function (Builder $query) {
             $query->where("name","like","%".request()->keyword."%");
         })->paginate(10)->withQueryString();
         return response()->json($items,200);
@@ -24,7 +24,13 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "name"=>"required"
+        ]);
+        $item = new Item();
+        $item->name = $request->name;
+        $item->save();
+        return response()->json(["message"=>"Create successfully!"]);
     }
 
     /**
@@ -32,7 +38,11 @@ class ItemController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $item = Item::find($id);
+        if (is_null($item)){
+            return response()->json(["message"=>"Item not found"],404);
+        }
+        return response()->json($item);
     }
 
     /**
