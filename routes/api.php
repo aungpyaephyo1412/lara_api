@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ItemController;
-use Illuminate\Http\Request;
+use App\Http\Middleware\CheckApiToken;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::prefix("v1")->group(function (){
+Route::prefix("v1")->middleware(["cat"])->group(function (){
     Route::apiResource("items",ItemController::class);
 });
