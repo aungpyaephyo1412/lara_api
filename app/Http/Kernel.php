@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckApiToken;
 use App\Http\Middleware\ForAll;
+use App\Http\Middleware\IsAuthenticated;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,6 +68,7 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'cat' => CheckApiToken::class
+        'cat' => CheckApiToken::class,
+        'authenticated' => IsAuthenticated::class
     ];
 }

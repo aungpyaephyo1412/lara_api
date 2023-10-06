@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::prefix("v1")->middleware(["cat"])->group(function (){
+Route::prefix("v1")->middleware(["cat","authenticated"])->group(function (){
     Route::apiResource("items",ItemController::class);
 });

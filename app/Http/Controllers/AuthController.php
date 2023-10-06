@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\IsNotAuthenticated;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(IsNotAuthenticated::class);
+    }
     public function register()
     {
         return view("auth.register");
@@ -52,6 +57,7 @@ class AuthController extends Controller
 
     public function logOut()
     {
-
+        session()->forget("auth");
+        return redirect()->route("auth.login");
     }
 }
