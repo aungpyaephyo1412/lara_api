@@ -46,7 +46,8 @@ class AuthController extends Controller
         if (!Hash::check($request->password,$student->password)){
             return redirect()->route("auth.login")->withErrors(["email"=>"Something went wrong!"]);
         }
-        return $student;
+        session(["auth"=>$student]);
+        return redirect()->route("dashboard.home");
     }
 
     public function logOut()

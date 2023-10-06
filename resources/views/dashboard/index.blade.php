@@ -4,6 +4,6 @@
 @endsection
 @section("content")
     <section>
-
+        {{session("auth")->name}}
     </section>
 @endsection
