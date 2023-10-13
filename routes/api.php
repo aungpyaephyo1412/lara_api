@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\ItemController;
 use App\Http\Middleware\CheckApiToken;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+
 Route::prefix("v1")->middleware(["cat"])->group(function (){
     Route::apiResource("items",ItemController::class);
+
+    Route::controller(AuthController::class)->group(function (){
+        Route::post("register","store")->name("api.store");
+        Route::post("login","check")->name("api.check");
+        Route::post("logout","logOut")->name("api.logout");
+    });
 });
